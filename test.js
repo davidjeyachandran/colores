@@ -1,4 +1,5 @@
 window.addEventListener("load", function(){
+
     miJSON = [
         {
             "name": "Melissa",
@@ -26,7 +27,7 @@ window.addEventListener("load", function(){
         }
     ];
     
-    var colorList = [];
+    var colorList = new Object();
     
     miJSON.forEach(function(item){
         if (isNaN(colorList[item.color])) colorList[item.color]=0;
