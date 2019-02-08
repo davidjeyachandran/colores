@@ -33,10 +33,10 @@ window.addEventListener("load", function(){
         if (isNaN(colorList[item.color])) colorList[item.color]=0;
         colorList[item.color]++;
     }); 
-    
+
     var html = '<table border=1>';
     Object.keys(colorList).forEach( function(item) {
-        html += '<tr><td>' + item + '</td><td>' + colorList[item] + '</td>';
+        html += '<tr><td>' + item + '</td><td>' + colorList[item] + '</td></tr>';
     });
     html += '</table>';
 
