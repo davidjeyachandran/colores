@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Color Favorito</title>
+  <meta name="description" content="Favorite Color">
+  <meta name="author" content="Edgar and Edith">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="images/color.jpg">
+  <style>
+
+</style>
+
+</head>
+<body>
+<center>
+    <br>
+    <h1>Colores</h1>
+    <br>
+    
+    <table>
+        <% Object.keys(colorList).forEach( function(item) { %>
+          <tr>
+              <td><%= item %></td><td><%= colorList[item] %></td>
+          </tr>
+        <% }) %>
+        </table>
+
+
+</body>
+</html>
