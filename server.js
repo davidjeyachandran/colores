@@ -5,13 +5,15 @@ const app = express();
 const dbLogin = require('./dbLogin');
 var db;
 
-console.log(dbLogin);
+const collection = 'colores';
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 
-MongoClient.connect('mongodb://' + dbLogin.username + ':' + dbLogin.password + '@ds123625.mlab.com:23625/dj-quotes', { useNewUrlParser: true }, (err, client) => {
-    if (err) return console.log(err);
+var mongoUrl = 'mongodb://' + dbLogin.username + ':' + dbLogin.password + '@ds123625.mlab.com:23625/dj-quotes';
+
+MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, client) => {
+    if (err) return console.log('Error: ' + err);
     
     db = client.db('dj-quotes')
     app.listen(3000, function() {
@@ -22,7 +24,7 @@ MongoClient.connect('mongodb://' + dbLogin.username + ':' + dbLogin.password + '
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
-    db.collection('quotes').find().toArray(function(err, results) {
+    db.collection(collection).find().toArray(function(err, results) {
         // console.log(results);      
     })
     res.sendFile(__dirname + '/public/index.html');
@@ -30,24 +32,17 @@ app.get('/', function(req, res) {
 
 app.post('/submit', (req, res) => {
     console.log(req.body);
-    db.collection('quotes').insertOne(req.body, (err, result) => {
+    db.collection(collection).insertOne(req.body, (err, result) => {
         if (err) return console.log(err)
-
         console.log('Saved to database');
-        res.redirect('/results')
+        
+        db.collection(collection).find().toArray(function(err, results) {
+            var colorList = getColorList(results);
+            console.log(colorList);
+            res.render('results.ejs', {colorList: colorList})
+          })
     })
 })
-
-app.get('/results', function(req, res) {
-    db.collection('quotes').find().toArray(function(err, results) {
-        console.log(results)
-        // res.send('<h1>Hey</h1>');
-        var colorList = getColorList(results);
-        console.log(colorList);
-        res.render('results.ejs', {colorList: colorList})
-        // send HTML file populated with quotes here
-      })
-});
 
 function getColorList(results) {
     var colorList = new Object();
