@@ -8,6 +8,8 @@ yarn-error.log*
 #passwords
 dbLogin.js
 
+mongoshell.sh
+
 # Runtime data
 pids
 *.pid
